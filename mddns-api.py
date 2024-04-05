@@ -25,7 +25,7 @@ parser.add_argument('value')
 
 class NewSubDomain(Resource):
     # Endpoint voor het toevoegen van een nieuwe subdomein.
-    # Voorbeeld curl: http://192.168.37.131:5000/subdomain/new -H "Content-type: application/json" -d "{ \"subdomain\" : \"miro\", \"ip\" : \"9.9.9.9\" }" -X POST
+    # Voorbeeld curl: http://192.168.1.158:5001/subdomain/new -H "Content-type: application/json" -d "{ \"subdomain\" : \"miro\", \"ip\" : \"1.1.1.1\" }" -X POST
     def post(self):
         args = parser.parse_args()
         if DEBUG:
@@ -37,7 +37,7 @@ class NewSubDomain(Resource):
 
 class EditSubDomain(Resource):
     # Endpoint voor het verwijderen van een subdomein.
-    # Voorbeeld curl: http://192.168.190.100:5000/subdomain/name/test1 -X DELETE
+    # Voorbeeld curl: http://192.168.1.158:5001/subdomain/name/test1 -X DELETE
     def delete(self, fqdn):
         if DEBUG:
             app.logger.warning(f"DEBUG: EditSubDomain.delete(\"{fqdn}\")")
@@ -45,8 +45,7 @@ class EditSubDomain(Resource):
         return {'status': 'ok'}
 
     # Endpoint voor het bijwerken van een subdomein.
-    # Voorbeeld curl: http://192.168.190.100:5000/client/name/jan -H "Content-type: application/json" -d "{ \"code\" : \"3333333\", \"value\" : 100 }" -X PUT
-    # Voorbeeld curl: http://192.168.37.131:5000/client/name/jan -H "Content-type: application/json" -d "{ \"code\" : \"33333\", \"value\" : \"11111\" }" -X PUT
+    # Voorbeeld curl: http://192.168.1.158:5001/subdomain/name/test1 -H "Content-type: application/json" -d "{ \"ip\" : \"1.1.1.1\" }" -X PUT
     def put(self, fqdn):
         args = parser.parse_args()
         if DEBUG:
@@ -56,7 +55,7 @@ class EditSubDomain(Resource):
         return {'status': 'ok'}
 
     # Endpoint voor het ophalen van details van een subdomein.
-    # Voorbeeld curl: http://192.168.190.100:5000/client/name/jan
+    # Voorbeeld curl: http://192.168.1.158:5001/subdomain/name/test1
     def get(self, fqdn):
         if DEBUG:
             app.logger.warning(f"DEBUG: EditSubDomain.get(\"{fqdn}\")")
