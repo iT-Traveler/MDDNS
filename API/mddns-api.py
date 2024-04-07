@@ -4,21 +4,27 @@ import sys
 from flask import Flask, request, abort
 from flask_restful import reqparse, Api, Resource
 from dnszone import DnsZone
-import os
-from dotenv import load_dotenv
-from flask import Flask, render_template, request
 from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
 import certifi
+import json
 from datetime import datetime
 
-ca = certifi.where()
+
+def read_configuration(file_path):
+    with open(file_path, 'r') as file:
+        config = json.load(file)
+        return config["mongodb_uri"]
+
+
+# Configuratiebestand
+config_file = "mddns-api-config.json"
+mongodb_uri = read_configuration(config_file)
 
 # MongoDB Atlas cluster
-load_dotenv()
-connection_string: str = os.environ.get("CONNECTION_STRING")
-mongo_client: MongoClient = MongoClient(connection_string, tlsCAFile=ca)
+ca = certifi.where()
+mongo_client: MongoClient = MongoClient(mongodb_uri, tlsCAFile=ca)
 
 # MongoDB database en collection
 database: Database = mongo_client.get_database("mddns-database")
