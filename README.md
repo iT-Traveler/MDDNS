@@ -8,7 +8,7 @@ Miro - Daan DNS service
 - [@iT-Traveler](https://github.com/iT-Traveler) | Miro de Ruiter | SN: 1828968
 
 
-## API curl commands
+## MDDNS API
 
 De MDDNS API is beschikbaar via https://mddns.azurewebsites.net. Onderstaand zijn voorbeeld commands met de verschillende mogelijkheden. Vervang de variabelen in deze [ ] haken.
 
@@ -19,7 +19,22 @@ De MDDNS API is beschikbaar via https://mddns.azurewebsites.net. Onderstaand zij
 | DNS record uitlezen | curl https://mddns.azurewebsites.net/subdomain/name/[YOUR-SUBDOMAIN] -H "X-API-Key: [YOUR-API-KEY]" |
 | DNS record verwijderen | curl -X DELETE https://mddns.azurewebsites.net/subdomain/name/[YOUR-SUBDOMAIN] -H "X-API-Key: [YOUR-API-KEY] |
 
-## AutoUpdater
+## MDDNS API uitrollen met Terraform
+
+De MDDNS API is eenvoudig uit te rollen door middel van terraform. Kopieer onderstaande bestand in PyCharm
+[a link]([https://github.com/user/repo/blob/branch/other_file.md](https://github.com/iT-Traveler/MDDNS/blob/main/Terraform/mddns-api-terraform.tf))
+
+Vervolgens voer je onderstaande commando's uit om de service naar Azure te pushen
+
+```bash
+az login
+az account set --subscription [YOUR-SUBSCRIPTION-ID]
+terraform init
+terraform apply
+terraform destroy
+```
+
+## MDDNS AutoUpdater
 
 Met de AutoUpdater veranderen de door jou gespecificeerde dns records automatisch op het moment dat het IP adres van de server veranderd.
 
