@@ -1,6 +1,11 @@
 # MDDNS
+
 Miro - Daan DNS service
 
+## Auteurs
+
+- [@DaandH](https://github.com/DaandH) | Daan den Hartog | SN: 1842828
+- [@iT-Traveler](https://github.com/iT-Traveler) | Miro de Ruiter | SN: 1828968
 
 
 ## API curl commands
