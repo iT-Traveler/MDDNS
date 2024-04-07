@@ -24,4 +24,12 @@ De MDDNS API is beschikbaar via https://mddns.azurewebsites.net. Onderstaand zij
 Met de AutoUpdater veranderen de door jou gespecificeerde dns records automatisch op het moment dat het IP adres van de server veranderd. Dit kan zo vaak als je zelf wilt door middel van een cronjob, een voorbeeld is hier van beschikbaar.
 
 Configuratie:
-In het mddns-autoupdater-config.json bestand geef je op wat je api-key is, wat de api-ip adres is en welke subdomeinen er gemonitord moeten worden.
+In het mddns-autoupdater-config.json bestand geef je op wat je api-key is, wat de api-ip adres is en welke subdomeinen er gemonitord moeten worden. Dit heeft het volgende format:
+
+```bash
+{
+  "api_key": "YOUR_VALID_API_KEY",
+  "api_ip": "API_SERVER:API_PORT",
+  "subdomains": ["subdomain1", "subdomain2"]
+}
+```
