@@ -21,10 +21,7 @@ De MDDNS API is beschikbaar via https://mddns.azurewebsites.net. Onderstaand zij
 
 ## MDDNS API uitrollen met Terraform
 
-De MDDNS API is eenvoudig uit te rollen door middel van terraform. Kopieer onderstaande bestand in PyCharm
-test[a link]([https://github.com/user/repo/blob/branch/other_file.md](https://github.com/iT-Traveler/MDDNS/blob/main/Terraform/mddns-api-terraform.tf))
-
-Vervolgens voer je onderstaande commando's uit om de service naar Azure te pushen
+De MDDNS API is eenvoudig uit te rollen door middel van terraform. Download het mddns-api-terraform.tf bestand en voer onderstaande commando's uit om de service naar Azure te pushen.
 
 ```bash
 az login
