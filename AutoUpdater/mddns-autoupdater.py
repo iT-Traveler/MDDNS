@@ -39,7 +39,7 @@ def UpdateDNSRecord(api_key, api_ip, subdomain, new_ip):
 
 
 def main():
-    # Configuration
+    # Configuratiebestand
     config_file = "mddns-autoupdater-config.json"
 
     # Haal benodigde informatie uit het configuratiebestand op
