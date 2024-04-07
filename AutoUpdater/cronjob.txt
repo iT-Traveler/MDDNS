@@ -1,0 +1,1 @@
+*/5 * * * * /usr/bin/python3 /home/gebruiker/scripts/mddns-autoupdater.py # Check elke 5 minuten of het ip adres van de server is veranderd.
