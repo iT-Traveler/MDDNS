@@ -10,7 +10,7 @@ Miro - Daan DNS service
 
 ## API curl commands
 
-De MDDNS API is beschikbaar via https://mddns.azurewebsites.net. Onderstaand zijn voorbeeld commands met de verschillende mogelijkheden. Vervang de variabelen in deze [] haken.
+De MDDNS API is beschikbaar via https://mddns.azurewebsites.net. Onderstaand zijn voorbeeld commands met de verschillende mogelijkheden. Vervang de variabelen in deze [ ] haken.
 
 | Doel | Command                |
 | :-------- | :------------------------- |
