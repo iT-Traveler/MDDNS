@@ -1,0 +1,14 @@
+$ORIGIN .
+$TTL    604800
+mddns.local     IN      SOA     mddns.local. root.mddns.local. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+                NS      bindserver.mddns.local.
+$ORIGIN mddns.local.
+bindserver      A       172.201.251.154
+$TTL 300        ;
+test1   A       1.1.1.1
+test6   A       2.2.2.2
