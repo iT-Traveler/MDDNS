@@ -1,0 +1,14 @@
+Om docker werkend te krijgen via Azure / AWS op M-series mac's moet je gebruik maken van onderstaande commando's:
+
+# AZURE DOCKER (Azure Container Registries)
+docker login dockermddns.azurecr.io
+docker buildx install
+docker buildx create --use
+docker buildx build --platform linux/amd64 -t dockermddns.azurecr.io/docker-mddns:latest --output type=docker .
+docker push dockermddns.azurecr.io/docker-mddns:latest
+
+# DOCKER HUB DOCKER 
+docker buildx install
+docker buildx create --use
+docker buildx build --platform linux/amd64 -t ittraveler/docker-mddns:latest --output type=docker .
+docker push ittraveler/docker-mddns:latest
