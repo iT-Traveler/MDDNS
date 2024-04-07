@@ -1,0 +1,38 @@
+sudo apt update -y &&  sudo apt upgrade -y
+sudo apt install bind9 bind9utils bind9-doc -y
+sudo systemctl status bind9
+sudo nano /etc/bind/named.conf.options
+{in BIND-files}
+
+named-checkconf /etc/bind/named.conf.options
+sudo nano /etc/bind/named.conf
+{in BIND-files}
+
+named-checkconf /etc/bind/named.conf.options
+sudo mkdir /etc/bind/zones
+sudo nano /etc/bind/zones/mddns.local.zone
+{in BIND-files}
+
+named-checkzone mddns.local /etc/bind/zones/mddns.local
+sudo systemctl restart bind9
+chown -R bind: /etc/bind/zones
+
+nslookup client1.mddns.com
+nslookup client2.mddns.com
+nslookup bindserver.mddns.com
+
+
+Poort 53 openen binnen azure
+
+nslookup test1.mddns.local 172.201.251.154
+
+Juiste permissies om de files aan te mogen passen:
+sudo nano /etc/apparmor.d/usr.sbin.named
+{Volgende regels toevoegen:
+/etc/bind/zones/**.jnl rw,
+/etc/bind/zones/**.jnl-* rw,
+}
+
+sudo apparmor_parser -r /etc/apparmor.d/usr.sbin.named
+sudo chown -R bind:bind /etc/bind/zones/
+sudo chmod -R 770 /etc/bind/zones/
