@@ -28,7 +28,7 @@ def GetCurrentDNSip(url, api_key):
 
 # Functie om het DNS-record te updaten door middel van de API
 def UpdateDNSRecord(api_key, api_ip, subdomain, new_ip):
-    url = f"http://{api_ip}/subdomain/name/{subdomain}"
+    url = f"https://{api_ip}/subdomain/name/{subdomain}"
     data = {"ip": new_ip}
     try:
         subprocess.run(["curl", url, "-H", f"Content-type: application/json", "-H", f"X-API-Key: {api_key}", "-d",
@@ -50,7 +50,7 @@ def main():
 
     # Check DNS records for each subdomain
     for subdomain in subdomains:
-        current_ip = GetCurrentDNSip(f"http://192.168.1.158:5001/subdomain/name/{subdomain}", api_key)
+        current_ip = GetCurrentDNSip(f"https://{api_ip}/subdomain/name/{subdomain}", api_key)
         if current_ip is None:
             print(f"Failed to retrieve DNS record for subdomain '{subdomain}'.")
             continue
