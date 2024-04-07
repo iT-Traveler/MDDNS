@@ -1,0 +1,5 @@
+{
+  "api_key": "YOUR_VALID_API_KEY",
+  "api_ip": "API_SERVER:API_PORT",
+  "subdomains": ["subdomain1", "subdomain2"]
+}
