@@ -1,0 +1,7 @@
+Onderstaand zijn de commando's om terraform uit te voeren op een Azure omgeving:
+
+az login
+az account set --subscription <YOUR-SUBSCRIPTION-ID>
+terraform init
+terraform apply
+terraform destroy
