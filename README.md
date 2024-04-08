@@ -51,3 +51,20 @@ Automatiseren gaat via een cronjob:
 ```bash
 */5 * * * * /usr/bin/python3 /home/gebruiker/scripts/mddns-autoupdater.py # Check elke 5 minuten of het ip adres van de server is veranderd.
 ```
+
+## Security maatregelen
+
+* OAuth2 voor externe authenticatie
+* Sessie management in webapplicatie
+* Beveiliging van API-endpoints door middel van API-keys
+* Data / Schijf -encryptie
+* Netwerksegmentatie: alleen de api-server en ons development ip hebben toegang tot de Database Server
+* Just-In-Time (JIT) Access
+* Gebruik van HTTPS: voor API endpoint en website
+* SSH access met certificates
+* Prod en Test omgeving
+Monitoring:
+* Azure app insights
+* Azure Diagnostics
+* Azure Health Check
+* Azure Logging
