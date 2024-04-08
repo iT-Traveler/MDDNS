@@ -63,6 +63,7 @@ Automatiseren gaat via een cronjob:
 * Gebruik van HTTPS: voor API endpoint en website
 * SSH access met certificates
 * Prod en Test omgeving
+
 Monitoring:
 * Azure app insights
 * Azure Diagnostics
