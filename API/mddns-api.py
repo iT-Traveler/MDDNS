@@ -15,12 +15,12 @@ from datetime import datetime
 def read_configuration(file_path):
     with open(file_path, 'r') as file:
         config = json.load(file)
-        return config["mongodb_uri"]
+        return config["api_ip"], config["api_port"], config["bind_ip"], config["mongodb_uri"]
 
 
 # Configuratiebestand
 config_file = "mddns-api-config.json"
-mongodb_uri = read_configuration(config_file)
+api_ip, api_port, bind_ip, mongodb_uri = read_configuration(config_file)
 
 # MongoDB Atlas cluster
 ca = certifi.where()
@@ -32,7 +32,7 @@ userCollection: Collection = database.get_collection("users")
 recordCollection: Collection = database.get_collection("records")
 
 domain_name = "mddns.local"
-dns_zone = DnsZone(domain_name, "172.201.251.154")
+dns_zone = DnsZone(domain_name, bind_ip)
 
 app = Flask(__name__)
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
@@ -44,8 +44,6 @@ DEBUG = True  # zet op False wanneer klaar met testen en troubleshooten
 parser = reqparse.RequestParser()
 parser.add_argument('subdomain')
 parser.add_argument('ip')
-parser.add_argument('code')
-parser.add_argument('value')
 
 
 # Valideer de opgegeven API keys
@@ -59,6 +57,12 @@ def require_api_key(func):
             abort(401, 'Unauthorized: Invalid API Key')
 
     return wrapper
+
+
+class Welcome(Resource):
+    # Welcome endpoint for the root URL "/"
+    def get(self):
+        return {'message': 'Welcome to MDDNS-API, please request a valid API key trough our webportal!'}
 
 
 class NewSubDomain(Resource):
@@ -80,11 +84,11 @@ class NewSubDomain(Resource):
         if check_exists:
             abort(409, f"Record with subdomain {subdomain} already exists.")
         # Voeg het nieuwe record toe door middel van de dns_zone module
-        dns_zone.add_address(fqdn, ipv4)
+        response = dns_zone.add_address(fqdn, ipv4)
         # Schrijf het nieuwe record weg in de database
         record = {"api-key": api_key, "subdomain": subdomain, "ipv4": ipv4, "timestamp": timestamp}
         recordCollection.insert_one(record)
-        return {'status': 'ok'}
+        return {"status": "ok", "message": response}
 
 
 class EditSubDomain(Resource):
@@ -97,10 +101,10 @@ class EditSubDomain(Resource):
             app.logger.warning(f"DEBUG: EditSubDomain.delete(\"{sub_domain}\")")
         fqdn = f"{sub_domain}.{domain_name}"
         # Verwijder het record door middel van de dns_zone module
-        dns_zone.clear_address(fqdn)
+        response = dns_zone.clear_address(fqdn)
         # Verwijder het record uit de database
         recordCollection.delete_one({"subdomain": sub_domain})
-        return {'status': 'ok'}
+        return {"status": "ok", "message": response}
 
     # Endpoint voor het bijwerken van een subdomein.
     # Voorbeeld curl -X PUT https://<ip_of_server>:<port>/subdomain/name/test -H "Content-type: application/json" -H "X-API-Key: your_api_key" -d "{ \"ip\" : \"1.1.1.1\" }"
@@ -114,11 +118,13 @@ class EditSubDomain(Resource):
         ipv4 = args['ip']
         timestamp = datetime.now()
         # Update het record door middel van de dns_zone module
-        dns_zone.update_address(fqdn, ipv4)
+        response = dns_zone.update_address(fqdn, ipv4)
         # Update het record in de database
-        recordCollection.update_one({"subdomain": sub_domain},
-                                    {"api-key": api_key, "subdomain": sub_domain, "ipv4": ipv4, "timestamp": timestamp})
-        return {'status': 'ok'}
+        recordCollection.update_one(
+            {"subdomain": sub_domain},
+            {"$set": {"api-key": api_key, "ipv4": ipv4, "timestamp": timestamp}}
+        )
+        return {"status": "ok", "message": response}
 
     # Endpoint voor het ophalen van details van een subdomein.
     # Voorbeeld curl https://<ip_of_server>:<port>/subdomain/name/test -H "X-API-Key: your_api_key"
@@ -134,8 +140,9 @@ class EditSubDomain(Resource):
 
 # Definieer endpoints hieronder.
 # Als een deel van de URL een variabele is, gebruik dan haakjes, bijvoorbeeld <sub_domain>
+api.add_resource(Welcome, '/')
 api.add_resource(NewSubDomain, '/subdomain/new')
 api.add_resource(EditSubDomain, '/subdomain/name/<sub_domain>')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, host=api_ip, port=api_port)
