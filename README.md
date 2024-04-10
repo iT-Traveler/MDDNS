@@ -31,6 +31,16 @@ terraform apply
 terraform destroy
 ```
 
+## MDDNS GUI
+
+Flask web application using OAUTH2 autorisation, to Create, Update, Read and Delete records. Records are also reflected in the MongoDB database, using generated API keys to verify autentication.
+
+To run the Gui:
+
+```bash
+python main.py
+```
+
 ## MDDNS AutoUpdater
 
 Met de AutoUpdater veranderen de door jou gespecificeerde dns records automatisch op het moment dat het IP adres van de server veranderd.
