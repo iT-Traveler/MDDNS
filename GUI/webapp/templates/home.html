@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1>Welcome to MDDNS</h1>
+            <p class="lead">A webapp for a DynamicDNS.</p>
+            <p>Sign in with Github to get started!</p>
+            <form action="login/github">
+                <button type="submit" class="btn btn-primary btn-lg">Github Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
